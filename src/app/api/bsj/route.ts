@@ -1,9 +1,17 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
 
-export async function GET(req: NextRequest) {
+export function GET(req: NextRequest): NextResponse {
   const month = req.nextUrl.searchParams.get("month");
   const width = req.nextUrl.searchParams.get("width");
   const height = req.nextUrl.searchParams.get("height");
-  console.log(month, width, height);
-  return Response.json({ month, width, height }, { status: 200 });
+
+  const filePath = path.resolve(".", "public", "bisyojo_chan.png");
+  const image = fs.readFileSync(filePath);
+
+  const headers = new Headers();
+  headers.set("Content-Type", "image/png");
+
+  return new NextResponse(image, { status: 200, headers: headers });
 }
