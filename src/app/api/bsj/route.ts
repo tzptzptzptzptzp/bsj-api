@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import sharp from "sharp";
+import { createImageName } from "@/utils/createImageName.util";
+import { getCurrentMonth } from "@/utils/getCurrentMonth.util";
+import { resizeImage } from "@/utils/resizeImage.util";
 
-const BASE_IMAGE = "bisyojo_chan_";
-
-const createImageName = (month: string) => {
-  return `${BASE_IMAGE}${month.padStart(2, "0")}.png`;
-};
+const defaultImageName = createImageName("0");
+const defaultImagePath = path.resolve(".", "public", defaultImageName);
+const defaultImage = fs.readFileSync(defaultImagePath);
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const month = req.nextUrl.searchParams.get("month");
@@ -16,25 +17,29 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const headers = new Headers();
   headers.set("Content-Type", "image/png");
 
-  const imageName = month ? createImageName(month) : createImageName("0");
+  const successOptions = {
+    status: 200,
+    headers: headers,
+  };
+
+  const imageName = month
+    ? createImageName(month)
+    : createImageName(getCurrentMonth());
 
   const filePath = path.resolve(".", "public", imageName);
-  const image = fs.readFileSync(filePath);
 
-  if (size) {
-    try {
-      const resizeImage = await sharp(image)
-        .resize({
-          width: parseInt(size),
-          height: parseInt(size),
-          fit: "fill",
-        })
-        .toBuffer();
-      return new NextResponse(resizeImage, { status: 200, headers: headers });
-    } catch (err) {
-      console.error("Error:", err);
+  if (fs.existsSync(filePath)) {
+    const image = fs.readFileSync(filePath);
+    if (size) {
+      try {
+        const resizedImage = await resizeImage(image, size);
+        return new NextResponse(resizedImage, successOptions);
+      } catch (err) {
+        console.error("Error:", err);
+      }
+    } else {
+      return new NextResponse(image, { status: 200, headers: headers });
     }
   }
-
-  return new NextResponse(image, { status: 200, headers: headers });
+  return new NextResponse(defaultImage, { status: 200, headers: headers });
 }
