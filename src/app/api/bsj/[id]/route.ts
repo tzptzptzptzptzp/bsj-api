@@ -20,6 +20,8 @@ export async function GET(
 
   if (resourceId === "current") {
     month = getCurrentMonth();
+  } else if (resourceId === "random") {
+    month = String(Math.floor(Math.random() * 12) + 1);
   } else {
     month = resourceId;
   }
