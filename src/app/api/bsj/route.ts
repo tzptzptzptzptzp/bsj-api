@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import sharp from "sharp";
 import { createImageName } from "@/utils/createImageName.util";
 import { getCurrentMonth } from "@/utils/getCurrentMonth.util";
 import { resizeImage } from "@/utils/resizeImage.util";
