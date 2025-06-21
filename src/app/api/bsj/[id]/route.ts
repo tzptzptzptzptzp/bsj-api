@@ -16,16 +16,6 @@ export async function GET(
   const resourceId = params.id;
   const size = req.nextUrl.searchParams.get("size");
 
-  let month: string;
-
-  if (resourceId === "current") {
-    month = getCurrentMonth();
-  } else if (resourceId === "random") {
-    month = String(Math.floor(Math.random() * 12) + 1);
-  } else {
-    month = resourceId;
-  }
-
   const headers = new Headers();
   headers.set("Content-Type", "image/png");
 
@@ -33,6 +23,32 @@ export async function GET(
     status: 200,
     headers: headers,
   };
+
+  let month: string;
+
+  if (resourceId === "random") {
+    const publicDir = path.resolve(".", "public");
+    const availableMonths: string[] = [];
+
+    for (let i = 1; i <= 12; i++) {
+      const monthStr = String(i);
+      const imageName = createImageName(monthStr);
+      if (fs.existsSync(path.join(publicDir, imageName))) {
+        availableMonths.push(monthStr);
+      }
+    }
+
+    if (availableMonths.length > 0) {
+      const randomIndex = Math.floor(Math.random() * availableMonths.length);
+      month = availableMonths[randomIndex];
+    } else {
+      return new NextResponse(defaultImage, successOptions);
+    }
+  } else if (resourceId === "current") {
+    month = getCurrentMonth();
+  } else {
+    month = resourceId;
+  }
 
   const imageName = createImageName(month);
   const filePath = path.resolve(".", "public", imageName);
