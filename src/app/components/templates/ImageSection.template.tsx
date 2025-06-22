@@ -23,7 +23,7 @@ export const ImageSection = ({
         </div>
         <p>{description}</p>
       </div>
-      <div>
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
         {imageSources.map((imageSource, index) => {
           return (
             <Image
@@ -32,6 +32,7 @@ export const ImageSection = ({
               alt="美少女ちゃん"
               width={200}
               height={200}
+              className="w-full h-auto aspect-square"
             />
           );
         })}
