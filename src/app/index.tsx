@@ -1,4 +1,4 @@
-import { IMAGE_SECTION_DATA } from "@/constants/imageSections";
+import { CONSTANTS } from "@/constants";
 import { ImageSection } from "./components/templates/ImageSection.template";
 
 export const Index = () => {
@@ -11,7 +11,7 @@ export const Index = () => {
             このAPIは、美少女ちゃんのアイコンを返すAPIです。
           </p>
         </div>
-        {IMAGE_SECTION_DATA.map((section, index) => (
+        {CONSTANTS.IMAGE_SECTIONS.map((section, index) => (
           <ImageSection
             key={index}
             description={section.description}
