@@ -24,6 +24,10 @@ export async function GET(
     headers: headers,
   };
 
+  if (resourceId === "default") {
+    return new NextResponse(defaultImage, successOptions);
+  }
+
   let month: string;
 
   if (resourceId === "random") {
