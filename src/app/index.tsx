@@ -1,3 +1,4 @@
+import { IMAGE_SECTION_DATA } from "@/constants/imageSections";
 import { ImageSection } from "./components/templates/ImageSection.template";
 
 export const Index = () => {
@@ -10,19 +11,15 @@ export const Index = () => {
             このAPIは、美少女ちゃんのアイコンを返すAPIです。
           </p>
         </div>
-        <ImageSection
-          description="デフォルトではその月に合ったイベントアイコンを返却します。"
-          endpoint="/api/bsj/default"
-          imageSources={[
-            "/api/bsj/default",
-            "/api/bsj/random",
-            "/api/bsj/default",
-            "/api/bsj/random",
-            "/api/bsj/default",
-            "/api/bsj/random",
-          ]}
-          title="デフォルト"
-        />
+        {IMAGE_SECTION_DATA.map((section, index) => (
+          <ImageSection
+            key={index}
+            description={section.description}
+            endpoint={section.endpoint}
+            imageSources={section.imageSources}
+            title={section.title}
+          />
+        ))}
       </div>
     </main>
   );
