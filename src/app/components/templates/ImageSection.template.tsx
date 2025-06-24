@@ -18,7 +18,7 @@ export const ImageSection = ({
     <div className="flex flex-col gap-4">
       <div>
         <div className="flex items-center gap-2">
-          <h2 className="text-xl">{title}</h2>
+          <h2 className="text-2xl">{title}</h2>
           <Code>{endpoint}</Code>
         </div>
         <p>{description}</p>
