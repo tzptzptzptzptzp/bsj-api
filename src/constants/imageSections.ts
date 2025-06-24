@@ -14,7 +14,15 @@ export const IMAGE_SECTIONS: ImageSection[] = [
     imageSources: ["/api/bsj/default"],
   },
   {
-    title: "イベント",
+    title: "イベント(指定月)",
+    description: "指定した月のイベントアイコンが返されます。",
+    endpoint: "/api/bsj/{1-12}",
+    imageSources: [
+      ...Array.from({ length: 12 }, (_, i) => `/api/bsj/${i + 1}`),
+    ],
+  },
+  {
+    title: "イベント(今月)",
     description: "今月のイベントアイコンが返されます。",
     endpoint: "/api/bsj/current",
     imageSources: ["/api/bsj/current"],
