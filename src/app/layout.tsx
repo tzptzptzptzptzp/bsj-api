@@ -12,6 +12,10 @@ const Font = M_PLUS_Rounded_1c({
 export const metadata: Metadata = {
   title: CONSTANTS.SITE.title,
   description: CONSTANTS.SITE.description,
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({
