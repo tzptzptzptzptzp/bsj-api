@@ -3,6 +3,7 @@ type ImageSection = {
   description: string;
   endpoint: string;
   imageSources: string[];
+  noCache?: boolean;
 };
 
 export const IMAGE_SECTIONS: ImageSection[] = [
@@ -24,5 +25,6 @@ export const IMAGE_SECTIONS: ImageSection[] = [
       "存在するイベントアイコンの中からランダムでアイコンが返されます。",
     endpoint: "/api/bsj/random",
     imageSources: ["/api/bsj/random"],
+    noCache: true,
   },
 ];

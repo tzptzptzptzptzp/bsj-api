@@ -16,6 +16,7 @@ export const Index = () => {
             endpoint={section.endpoint}
             imageSources={section.imageSources}
             title={section.title}
+            noCache={section.noCache}
           />
         ))}
       </div>

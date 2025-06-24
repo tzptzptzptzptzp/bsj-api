@@ -6,6 +6,7 @@ type Props = {
   endpoint: string;
   imageSources: string[];
   title: string;
+  noCache?: boolean;
 };
 
 export const ImageSection = ({
@@ -13,6 +14,7 @@ export const ImageSection = ({
   endpoint,
   imageSources,
   title,
+  noCache,
 }: Props) => {
   return (
     <div className="flex flex-col gap-4">
@@ -25,10 +27,13 @@ export const ImageSection = ({
       </div>
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
         {imageSources.map((imageSource, index) => {
+          const src = noCache
+            ? `${imageSource}?v=${new Date().getTime()}`
+            : imageSource;
           return (
             <Image
-              key={index}
-              src={imageSource}
+              key={`${src}-${index}`}
+              src={src}
               alt="美少女ちゃん"
               width={200}
               height={200}
