@@ -13,9 +13,16 @@ export const IMAGE_SECTIONS: ImageSection[] = [
     imageSources: ["/api/bsj/default"],
   },
   {
-    title: "今月の美少女ちゃん",
+    title: "イベント",
     description: "今月のイベントアイコンが返されます。",
     endpoint: "/api/bsj/current",
     imageSources: ["/api/bsj/current"],
+  },
+  {
+    title: "ランダム",
+    description:
+      "存在するイベントアイコンの中からランダムでアイコンが返されます。",
+    endpoint: "/api/bsj/random",
+    imageSources: ["/api/bsj/random"],
   },
 ];
