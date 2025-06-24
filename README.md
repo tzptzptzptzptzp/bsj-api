@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 美少女ちゃん API
 
-## Getting Started
+この API は、美少女ちゃんのアイコンを返す API です。
 
-First, run the development server:
+## デフォルト `/api/bsj/default`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+デフォルトで設定されているアイコンが返されます。  
+オプション：サイズ指定 `?size={number}`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/default" width="125" height="125">
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## イベント(指定月) `/api/bsj/{1-12}`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+指定した月のイベントアイコンが返されます。  
+オプション：サイズ指定 `?size={number}`
 
-## Learn More
+<div style="display:flex;" align="left">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/1" width="125" height="125">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/2" width="125" height="125">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/3" width="125" height="125">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/4" width="125" height="125">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/5" width="125" height="125">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/6" width="125" height="125">
+</div>
+<div style="display:flex;" align="left">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/7" width="125" height="125">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/8" width="125" height="125">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/9" width="125" height="125">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/10" width="125" height="125">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/11" width="125" height="125">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/12" width="125" height="125">
+</div>
 
-To learn more about Next.js, take a look at the following resources:
+## イベント(今月) `/api/bsj/current`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+今月のイベントアイコンが返されます。  
+オプション：サイズ指定 `?size={number}`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/current" width="125" height="125">
 
-## Deploy on Vercel
+## ランダム `/api/bsj/random`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+存在するイベントアイコンの中からランダムでアイコンが返されます。  
+オプション：サイズ指定 `?size={number}`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/random" width="125" height="125">
