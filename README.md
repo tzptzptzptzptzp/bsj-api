@@ -14,18 +14,22 @@
 指定した月のイベントアイコンが返されます。  
 オプション：サイズ指定 `?size={number}`
 
-<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/1" width="180" height="180">
-<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/2" width="180" height="180">
-<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/3" width="180" height="180">
-<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/4" width="180" height="180">
-<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/5" width="180" height="180">
-<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/6" width="180" height="180">
-<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/7" width="180" height="180">
-<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/8" width="180" height="180">
-<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/9" width="180" height="180">
-<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/10" width="180" height="180">
-<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/11" width="180" height="180">
-<img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/12" width="180" height="180">
+<div style="display:flex;" align="left">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/1" width="180" height="180">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/2" width="180" height="180">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/3" width="180" height="180">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/4" width="180" height="180">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/5" width="180" height="180">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/6" width="180" height="180">
+</div>
+<div style="display:flex;" align="left">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/7" width="180" height="180">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/8" width="180" height="180">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/9" width="180" height="180">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/10" width="180" height="180">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/11" width="180" height="180">
+    <img alt="美少女ちゃん" src="https://bsj-api.vercel.app/api/bsj/12" width="180" height="180">
+</div>
 
 ## イベント(今月) `/api/bsj/current`
 
