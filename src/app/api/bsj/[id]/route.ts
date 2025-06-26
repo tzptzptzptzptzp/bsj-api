@@ -1,76 +1,89 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-import { createImageName } from "@/utils/createImageName.util";
+import { unstable_noStore as noStore } from "next/cache";
 import { getCurrentMonth } from "@/utils/getCurrentMonth.util";
-import { resizeImage } from "@/utils/resizeImage.util";
 
-const defaultImageName = createImageName("0");
-const defaultImagePath = path.resolve(".", "public", defaultImageName);
-const defaultImage = fs.readFileSync(defaultImagePath);
+/**
+ * 画像がホストされているCloudflare R2のベースURL
+ */
+const IMAGE_BASE_URL = process.env.IMAGE_BASE_URL;
 
+/**
+ * 画像ファイル名の共通接頭辞
+ */
+const FILENAME_PREFIX = "bisyojo_chan_";
+
+/**
+ * R2に存在する画像の「月」の番号リスト
+ */
+const AVAILABLE_MONTHS = [1, 2, 6, 7, 10, 11, 12];
+
+/**
+ * R2に配備されている、配信対象の画像ファイル名のリスト
+ */
+const AVAILABLE_IMAGE_FILENAMES = AVAILABLE_MONTHS.map((month) => {
+  const monthNumber = String(month).padStart(2, "0");
+  return `${FILENAME_PREFIX}${monthNumber}.png`;
+});
+
+/**
+ * フォールバック時に使用されるデフォルトの画像ファイル名
+ */
+const DEFAULT_IMAGE_FILENAME = `${FILENAME_PREFIX}00.png`;
+
+/**
+ * APIリクエストに応じて、R2上の画像URLへリダイレクトする
+ * @param req - Next.jsのリクエストオブジェクト
+ * @param params - URLの動的セグメント（例: { id: 'random' }）
+ * @returns 画像URLへのリダイレクトレスポンス
+ */
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ): Promise<NextResponse> {
+  // Vercelのデータキャッシュを無効化し、リクエストごとに動的な処理を保証する
+  // 実際のコンテンツキャッシュは、リダイレクト先のCDN（Cloudflare）に完全に委ねる
+  noStore();
+
   const resourceId = params.id;
-  const size = req.nextUrl.searchParams.get("size");
+  let targetImageFilename: string;
 
-  const headers = new Headers();
-  headers.set("Content-Type", "image/png");
-
-  const successOptions = {
-    status: 200,
-    headers: headers,
-  };
-
-  if (resourceId === "default") {
-    return new NextResponse(defaultImage, successOptions);
-  }
-
-  let month: string;
-
+  // リクエストIDを解析し、対象となる画像ファイル名を決定する
   if (resourceId === "random") {
-    const publicDir = path.resolve(".", "public");
-    const availableMonths: string[] = [];
-
-    for (let i = 1; i <= 12; i++) {
-      const monthStr = String(i);
-      const imageName = createImageName(monthStr);
-      if (fs.existsSync(path.join(publicDir, imageName))) {
-        availableMonths.push(monthStr);
-      }
-    }
-
-    if (availableMonths.length > 0) {
-      const randomIndex = Math.floor(Math.random() * availableMonths.length);
-      month = availableMonths[randomIndex];
-    } else {
-      return new NextResponse(defaultImage, successOptions);
-    }
+    // 利用可能な画像リストからランダムに一つを選択する
+    const randomIndex = Math.floor(
+      Math.random() * AVAILABLE_IMAGE_FILENAMES.length
+    );
+    targetImageFilename = AVAILABLE_IMAGE_FILENAMES[randomIndex];
   } else if (resourceId === "current") {
-    month = getCurrentMonth();
+    // 現在の月に対応するファイル名を生成する
+    const month = getCurrentMonth();
+    const potentialFilename = `${month}.png`;
+    // ただし、その月の画像が存在するかをリストで確認し、なければデフォルトを使用する
+    targetImageFilename = AVAILABLE_IMAGE_FILENAMES.includes(potentialFilename)
+      ? potentialFilename
+      : DEFAULT_IMAGE_FILENAME;
+  } else if (resourceId === "default") {
+    // 明示的にデフォルト画像が要求された場合
+    targetImageFilename = DEFAULT_IMAGE_FILENAME;
+  } else if (AVAILABLE_IMAGE_FILENAMES.includes(`${resourceId}.png`)) {
+    // 1-12などの有効なIDが指定された場合
+    targetImageFilename = `${resourceId}.png`;
   } else {
-    month = resourceId;
+    // 上記のいずれにも一致しない無効なIDの場合は、デフォルトにフォールバックする
+    targetImageFilename = DEFAULT_IMAGE_FILENAME;
   }
 
-  const imageName = createImageName(month);
-  const filePath = path.resolve(".", "public", imageName);
-
-  if (fs.existsSync(filePath)) {
-    const image = fs.readFileSync(filePath);
-    if (size) {
-      try {
-        const resizedImage = await resizeImage(image, size);
-        return new NextResponse(resizedImage, successOptions);
-      } catch (err) {
-        console.error("Error resizing image:", err);
-        return new NextResponse(defaultImage, successOptions);
-      }
-    } else {
-      return new NextResponse(image, successOptions);
-    }
+  // ベースURLと決定したファイル名を結合して、最終的なリダイレクト先URLを構築する
+  const redirectUrl = new URL(`${IMAGE_BASE_URL}/${targetImageFilename}`);
+  console.log(targetImageFilename);
+  console.log(redirectUrl);
+  // 元のリクエストに含まれる 'size' クエリパラメータをリダイレクト先URLに引き継ぐ
+  // これにより、将来的にリダイレクト先でCloudflare Imagesなどの画像処理サービスを使う場合にも対応できる
+  const size = req.nextUrl.searchParams.get("size");
+  if (size) {
+    redirectUrl.searchParams.set("size", size);
   }
 
-  return new NextResponse(defaultImage, successOptions);
+  // 構築したURLへ307 Temporary Redirectレスポンスを返す
+  return NextResponse.redirect(redirectUrl);
 }
