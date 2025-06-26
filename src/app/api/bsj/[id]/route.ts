@@ -75,8 +75,7 @@ export async function GET(
 
   // ベースURLと決定したファイル名を結合して、最終的なリダイレクト先URLを構築する
   const redirectUrl = new URL(`${IMAGE_BASE_URL}/${targetImageFilename}`);
-  console.log(targetImageFilename);
-  console.log(redirectUrl);
+
   // 元のリクエストに含まれる 'size' クエリパラメータをリダイレクト先URLに引き継ぐ
   // これにより、将来的にリダイレクト先でCloudflare Imagesなどの画像処理サービスを使う場合にも対応できる
   const size = req.nextUrl.searchParams.get("size");
