@@ -33,6 +33,5 @@ export const IMAGE_SECTIONS: ImageSection[] = [
       "存在するイベントアイコンの中からランダムでアイコンが返されます。",
     endpoint: "/api/bsj/random",
     imageSources: ["/api/bsj/random"],
-    noCache: true,
   },
 ];
