@@ -1,34 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { unstable_noStore as noStore } from "next/cache";
 import { getCurrentMonth } from "@/utils/getCurrentMonth.util";
-
-/**
- * 画像がホストされているCloudflare R2のベースURL
- */
-const IMAGE_BASE_URL = process.env.IMAGE_BASE_URL;
-
-/**
- * 画像ファイル名の共通接頭辞
- */
-const FILENAME_PREFIX = "bisyojo_chan_";
-
-/**
- * R2に存在する画像の「月」の番号リスト
- */
-const AVAILABLE_MONTHS = [1, 2, 6, 7, 10, 11, 12];
-
-/**
- * R2に配備されている、配信対象の画像ファイル名のリスト
- */
-const AVAILABLE_IMAGE_FILENAMES = AVAILABLE_MONTHS.map((month) => {
-  const monthNumber = String(month).padStart(2, "0");
-  return `${FILENAME_PREFIX}${monthNumber}.png`;
-});
-
-/**
- * フォールバック時に使用されるデフォルトの画像ファイル名
- */
-const DEFAULT_IMAGE_FILENAME = `${FILENAME_PREFIX}00.png`;
+import {
+  AVAILABLE_IMAGE_FILENAMES,
+  DEFAULT_IMAGE_FILENAME,
+  IMAGE_BASE_URL,
+} from "@/constants/api";
 
 /**
  * APIリクエストに応じて、R2上の画像URLへリダイレクトする
