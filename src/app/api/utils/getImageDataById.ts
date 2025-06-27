@@ -2,18 +2,8 @@ import {
   AVAILABLE_MONTHS,
   DEFAULT_IMAGE_FILENAME,
   FILENAME_PREFIX,
-  IMAGE_BASE_URL,
 } from "@/constants/api";
-
-// --- データ生成ヘルパー ---
-const createImageDataObject = (
-  month: number | "default",
-  fileName: string
-) => ({
-  month,
-  fileName,
-  path: `${IMAGE_BASE_URL}/${fileName}`,
-});
+import { createImageDataObject } from "./createImageDataObject";
 
 const defaultImageData = createImageDataObject(
   "default",
