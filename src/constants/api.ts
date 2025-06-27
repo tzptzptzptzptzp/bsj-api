@@ -4,6 +4,12 @@
 export const IMAGE_BASE_URL = process.env.IMAGE_BASE_URL;
 
 /**
+ * APIのベースURL
+ */
+export const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+
+/**
  * 画像ファイル名の共通接頭辞
  */
 export const FILENAME_PREFIX = "bisyojo_chan_";
