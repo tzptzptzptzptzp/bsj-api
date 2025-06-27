@@ -39,10 +39,16 @@ export function getImageDataById(id: string) {
   }
 
   const numericId = parseInt(id, 10);
-  if (!isNaN(numericId) && AVAILABLE_MONTHS.includes(numericId)) {
-    const monthNumber = String(numericId).padStart(2, "0");
-    const fileName = `${FILENAME_PREFIX}${monthNumber}.png`;
-    return createImageDataObject(numericId, fileName);
+  if (!isNaN(numericId) && numericId >= 1 && numericId <= 12) {
+    if (AVAILABLE_MONTHS.includes(numericId)) {
+      // 存在する場合：その月の画像データを返す
+      const monthNumber = String(numericId).padStart(2, "0");
+      const fileName = `${FILENAME_PREFIX}${monthNumber}.png`;
+      return createImageDataObject(numericId, fileName);
+    } else {
+      // 存在しない場合：デフォルトの画像データを返す
+      return defaultImageData;
+    }
   }
 
   // マッチしない場合はnullを返す（あるいはデフォルトを返す）
