@@ -34,6 +34,24 @@ export const ImageSection = ({
           const src = noCache
             ? `${imageSource}?v=${new Date().getTime()}`
             : imageSource;
+
+          // noCacheがtrueの場合、標準の<img>タグを返す
+          if (noCache) {
+            return (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={`${src}-${index}`}
+                src={src}
+                alt="美少女ちゃん"
+                width={200}
+                height={200}
+                className="w-full h-auto aspect-square"
+                loading="lazy"
+              />
+            );
+          }
+
+          // noCacheがfalseまたは未定義の場合、Imageコンポーネントを返す
           return (
             <Image
               key={`${src}-${index}`}
