@@ -8,7 +8,7 @@ type Props = {
 export const Code = ({ children, size = "sm" }: Props) => {
   const sizeVariantClasses = {
     xs: "text-[0.7rem] leading-none px-1.5 py-0.5",
-    sm: "text-sm  px-1.5 py-0.5",
+    sm: "text-sm s:text-xs px-1.5 py-0.5",
     base: "text-base px-2 py-1",
     lg: "text-lg px-2.5 py-1.5",
   };
