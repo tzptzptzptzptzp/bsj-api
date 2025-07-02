@@ -17,19 +17,19 @@ export const ImageSection = ({
   noCache,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 s:gap-2">
       <div>
         <div className="flex items-center gap-2">
-          <h2 className="text-2xl">{title}</h2>
+          <h2 className="text-2xl s:text-xl">{title}</h2>
           <Code>{endpoint}</Code>
         </div>
-        <p>{description}</p>
+        <p className="text-base s:leading-tight">{description}</p>
         <div className="flex items-center gap-2">
           <p className="text-xs leading-none">オプション：サイズ指定</p>
           <Code size="xs">{"?size={number}"}</Code>
         </div>
       </div>
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 s:gap-1">
         {imageSources.map((imageSource, index) => {
           const src = noCache
             ? `${imageSource}?v=${new Date().getTime()}`
